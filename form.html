@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <form style="width: 100%;max-width: 800px;margin: 0 auto;">
+        <div class="input-box-row" style="display: flex;flex-wrap: wrap;gap: 20px;width: 100%;margin-bottom: 40px;">
+            <div class="input-box"
+                style="display: flex;flex-direction: column;gap: 5px;width: calc(50%-10px);flex-grow: 1;min-width: 320px">
+                <input type='text' id='FName' name='FName'
+                    style="border: none;border-bottom: 1px solid #321A10;background-color: transparent;outline: none;border-radius: 0;"
+                    placeholder="First name" />
+            </div>
+            <div class="input-box"
+                style="display: flex;flex-direction: column;gap: 5px;width: calc(50%-10px);flex-grow: 1;min-width: 320px">
+
+                <input placeholder="Last name"
+                    style="border: none;border-bottom: 1px solid #321A10;background-color: transparent;outline: none;border-radius: 0;"
+                    type='text' id='LName' name='LName' />
+            </div>
+        </div>
+        <div class="input-box-row" style="display: flex;flex-wrap: wrap;gap: 20px;width: 100%;margin-bottom: 40px;">
+
+            <div class="input-box"
+                style="display: flex;flex-direction: column;gap: 5px;width: calc(50%-10px);flex-grow: 1;min-width: 320px">
+                <input placeholder="Email" type="email"
+                    style="border: none;border-bottom: 1px solid #321A10;background-color: transparent;outline: none;border-radius: 0;"
+                    type='text' id='email' name='email' />
+            </div>
+            <div class="input-box"
+                style="display: flex;flex-direction: column;gap: 5px;width: calc(50%-10px);flex-grow: 1;min-width: 320px">
+                <input placeholder="Mobile phone" type="tel"
+                    style="border: none;border-bottom: 1px solid #321A10;background-color: transparent;outline: none;border-radius: 0;"
+                    type='text' id='mobile' name='mobile' />
+            </div>
+        </div>
+        <div class="input-box-row" style="display: flex;flex-wrap: wrap;gap: 20px;width: 100%;margin-bottom: 40px;">
+
+            <div class="input-box"
+                style="display: flex;flex-direction: column;gap: 5px;width: calc(50%-10px);flex-grow: 1;min-width: 320px">
+                <input placeholder="City"
+                    style="border: none;border-bottom: 1px solid #321A10;background-color: transparent;outline: none;border-radius: 0;"
+                    type='text' id='city' name='city' />
+            </div>
+            <div class="input-box"
+                style="display: flex;flex-direction: column;gap: 5px;width: calc(50%-10px);flex-grow: 1;min-width: 320px">
+                <input placeholder="Address"
+                    style="border: none;border-bottom: 1px solid #321A10;background-color: transparent;outline: none;border-radius: 0;"
+                    type='text' id='address' name='address' />
+            </div>
+        </div>
+    </form>
+    <button id="formSubmit"
+        style="display: flex;align-items:center;justify-content:center;margin: 0 auto;width: 100%;max-width: 200px;background-color: #321A10;outline: none;border: none;color: #fff;font-weight: 400;">SUBMIT</button>
+
+
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"
+        integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+
+    <script>
+        $(document).ready(function () {
+            $("#formSubmit").click(function (event) {
+                event.preventDefault();
+
+                const fName = $('#FName').val();
+                const lName = $('#LName').val();
+                const email = $('#email').val();
+                const mobile = $('#mobile').val();
+                const address = $('#address').val();
+                const city = $('#city').val();
+
+                if (!fName || !lName || !email || !mobile || !address || !city) {
+                    alert("Please fill in all fields.");
+                    return;
+                }
+
+                const apiKey = 'MTIzMDka02efd5b36cb3a55fccc71d09e036a31';
+                const redirectLink = 'http://localhost/tifia'; //redirect to http://localhost/tifia after the submit
+                const apiUrl = 'https://migration.pabau.me/OAuth2/leads/lead-curl.php'; //send info to https://migration.pabau.me/OAuth2/leads/lead-curl.php
+                const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+                const fullUrl = `${proxyUrl}${apiUrl}?api_key=${apiKey}&redirect_link=${redirectLink}&Fname=${fName}&LName=${lName}&email=${email}&mobile=${mobile}&address=${address}&city=${city}`;
+
+                $.ajax({
+                    url: fullUrl,
+                    method: 'POST',
+                    success: function (data) {
+                        console.log(data);
+                        //   window.open(redirectLink)
+                    },
+                    error: function (xhr, status, error) {
+                        alert(error);
+                        console.log(error);
+                    }
+                });
+            });
+        });
+
+    </script>
+</body>
+
+</html>
